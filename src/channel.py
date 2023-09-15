@@ -1,6 +1,7 @@
 import json
 import os
 from googleapiclient.discovery import build
+import isodate
 
 
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
@@ -54,3 +55,31 @@ class Channel:
         """Получение информации о сервисе"""
         website = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
         return website
+
+    def __str__(self):
+        """Метод str для вывода канала и ссылки"""
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """Сложение"""
+        return int(self.channel_subs_count) + int(other.channel_subs_count)
+
+    def __sub__(self, other):
+        """Magic - method"""
+        return int(self.channel_subs_count) - int(other.channel_subs_count)
+
+    def __gt__(self, other):
+        """Сравнение больше"""
+        return int(self.channel_subs_count) > int(other.channel_subs_count)
+
+    def __ge__(self, other):
+        """Сравнение больше или равно"""
+        return int(self.channel_subs_count) >= int(other.channel_subs_count)
+
+    def __lt__(self, other):
+        """Сравнение меньше"""
+        return int(self.channel_subs_count) < int(other.channel_subs_count)
+
+    def __le__(self, other):
+        """Сравнение меньше или равно"""
+        return int(self.channel_subs_count) <= int(other.channel_subs_count)
