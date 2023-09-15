@@ -48,7 +48,7 @@ class Channel:
     def channel_id(self):
         """айди канала"""
         return self.__channel_id
-
+1
     @classmethod
     def get_service(cls):
         """Получение информации о сервисе"""
