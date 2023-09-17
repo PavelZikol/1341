@@ -3,8 +3,8 @@ import os
 from googleapiclient.discovery import build
 import isodate
 
-
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+
 class Channel:
     """Класс для ютуб - канала"""
 
