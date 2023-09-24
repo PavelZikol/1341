@@ -83,3 +83,39 @@ class Channel:
     def __le__(self, other):
         """Сравнение меньше или равно"""
         return int(self.channel_subs_count) <= int(other.channel_subs_count)
+
+    def print_info(self) -> None:
+        """Выводит в консоль информацию о канале."""
+        channel = self.get_service().channels().list(id=self.channel_id,
+                                                     part="snippet,statistics").execute()
+        print(json.dumps(channel, indent=2, ensure_ascii=False))
+
+    def to_json(self, json_name):
+        """Запись информации о канале в файл json"""
+        data = {"channel_id": self.channel_id,
+                "channel_title": self.title,
+                "channel_description": self.desc,
+                "channel_url": self.url,
+                "channel_subscribers_count": self.channel_subs_count,
+                "channel_video_count": self.video_count,
+                "channel_views": self.channel_views}
+        with open(json_name, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+
+    @property
+    def channel_id(self):
+        """ID канала"""
+        return self.__channel_id
+
+    @classmethod
+    def get_service(cls):
+        """Получение информации о сервисе"""
+        api_key: str = os.getenv("YOUTUBE_API_KEY")
+        youtube = build("youtube", "v3", developerKey=api_key)
+        return youtube
+
+    def get_channel_info(self):
+        """Получение информации о канале"""
+        channel = self.get_service().channels().list(id=self.__channel_id,
+                                                     part="snippet,statistics").execute()
+        return channel
