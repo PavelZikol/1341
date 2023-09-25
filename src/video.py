@@ -31,18 +31,14 @@ class Video:
         return video
 
 
-class PLVideo:
+class PLVideo(Video):
     """Класс PLVideo"""
 
-    def __init__(self, video_id, pl_id):
+    def __init__(self, video_info, title, url, video_views,video_likes_count ,video_id, pl_id):
+        super().__init__(video_info, title, url, video_views, video_likes_count)
         self.pl_id = pl_id
         self.video_id = video_id
         self.pl_info = self.get_pl_items_info()
-        self.video_info = self.get_video_info()
-        self.title = self.video_info["items"][0]["snippet"]["title"]
-        self.url = "https://www.youtube.com/watch?v=" + self.video_id
-        self.video_views = self.video_info["items"][0]["statistics"]["viewCount"]
-        self.video_likes_count = self.video_info["items"][0]["statistics"]["likeCount"]
         self.real_pl_id = self.pl_info["items"][0]["id"]
 
     def __str__(self):
